@@ -47,6 +47,10 @@ function aura_env.GetUnitPowerType(unit)
             unitPowerIndex = 4;
             unitPowerName = "COMBO_POINTS";
             maxPower = UnitPowerMax("player",unitPowerIndex,true);
+        else
+            unitPowerIndex = 0;
+            unitPowerName = "";
+            maxPower = 0;
         end
     elseif unitClass == "MAGE" then
         unitPowerIndex = 16;

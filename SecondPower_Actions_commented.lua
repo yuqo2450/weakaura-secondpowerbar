@@ -69,6 +69,11 @@ function aura_env.GetUnitPowerType(unit)
             unitPowerIndex = 4;
             unitPowerName = "COMBO_POINTS";
             maxPower = UnitPowerMax("player",unitPowerIndex,true);
+        -- Since wow version 9.0.5 lua for loops don't accept nil as a limiter so maxPower has to be set to 0 if not in cat
+        else
+            unitPowerIndex = 0;
+            unitPowerName = "";
+            maxPower = 0;
 
         end
 
