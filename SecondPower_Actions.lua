@@ -10,11 +10,11 @@ function aura_env.GetPowerValue(currentPower,unitPowerIndex)
 
     if allPowerStatus >= currentPower then
         return 1;
-    elseif currentPower - allPowerStatus > 1 then        
+    elseif currentPower - allPowerStatus > 1 then
         return 0;
     else
         return allPowerStatus - (currentPower - 1);
-    end    
+    end
 end
 
 function aura_env.GetUnitPowerType(unit)
@@ -56,6 +56,10 @@ function aura_env.GetUnitPowerType(unit)
         unitPowerIndex = 16;
         unitPowerName = "ARCANE_CHARGES";
         maxPower = UnitPowerMax("player",unitPowerIndex,true);
+    elseif unitClass == "DEATHKNIGHT" then
+        unitPowerIndex = 5;
+        unitPowerName = "RUNES";
+        maxPower = UnitPowerMax("player",unitPowerIndex,true);
     end
 
     return unitPowerIndex,unitPowerName,maxPower;
@@ -76,6 +80,8 @@ function aura_env.SetBarColor(class)
         color = aura_env.config.comboPoints;
     elseif class == "MONK" then
         color = aura_env.config.chi;
+    elseif class == "DEATHKNIGHT" then
+        color = aura_env.config.dkRunes
     end
 
     return color[1],color[2],color[3],color[4];
