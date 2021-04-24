@@ -9,25 +9,25 @@ function(allstates,event,arg1,arg2,...)
             return true;
         end
         
-        if arg1 == "player" and arg2 == unitPowerName then
-          
-            aura_env.SetPowerValue(allstates,maxPower,unitPowerIndex)
+        if arg1 == "player" and arg2 == unitPowerName then          
+            aura_env.SetPowerValue(allstates,maxPower,unitPowerIndex);
             return true;
         end
 
     elseif event == "RUNE_POWER_UPDATE" then
 
-        print("updated rune!")
+        aura_env.region:SetInverse(true);
+        aura_env.SetDKRunes(allstates,maxPower);
+        return true;
         
     elseif event == "PLAYER_ENTERING_WORLD" then
 
         if unitClass == "DEATHKNIGHT" then
-            aura_env.CreateDKStates(allstates,maxPower);
-            print("using DK runes!")
+            aura_env.region:SetInverse(true);
+            aura_env.SetDKRunes(allstates,maxPower);
         else
             aura_env.CreateStates(allstates,maxPower,unitPowerIndex);
-            print("not using DK runes!")
-        end
+         end
         return true;
 
     elseif event == "PLAYER_TALENT_UPDATE" then
