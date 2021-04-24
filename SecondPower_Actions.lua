@@ -112,23 +112,20 @@ function aura_env.SetPowerValue(allstates,maxPower,unitPowerIndex)
     end
 end
 
-function aura_env.CreateDKRunes(allstates,maxPower)
+function aura_env.SetDKRunes(allstates,maxPower)
     
     for currentPower=1,maxPower do
         local start,duration,runeState = GetRuneCooldown(currentPower)
         allstates["power"..currentPower] = {
+            changed = true,
             show = true,
             progressType = "timed",
             expirationTime = start + duration,
             duration = duration,
             name = currentPower,
-            index = currentPower,
+            index = start + duration,
         };
     end
-end
-
-function aura_env.GetRuneState(allstates,runeID,runeState)
-
 end
 
 function aura_env.ClearStates(allstates)
