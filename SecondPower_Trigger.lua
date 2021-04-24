@@ -11,13 +11,7 @@ function(allstates,event,arg1,arg2,...)
         
         if arg1 == "player" and arg2 == unitPowerName then
           
-            for currentPower=1,maxPower do
-
-                allstates["power"..currentPower].value = aura_env.GetPowerValue(currentPower,unitPowerIndex);
-                allstates["power"..currentPower].show = true;
-                allstates["power"..currentPower].changed = true;
-
-            end
+            aura_env.SetPowerValue(allstates,maxPower,unitPowerIndex)
             return true;
         end
 
