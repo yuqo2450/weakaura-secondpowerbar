@@ -6,9 +6,7 @@ function(allstates,event,arg1,arg2,...)
     if event == "UNIT_POWER_UPDATE" then
         
         if arg1 ~= "player" or arg2 ~= unitPowerName then
-
             return true;
-
         end
         
         if arg1 == "player" and arg2 == unitPowerName then
@@ -22,18 +20,26 @@ function(allstates,event,arg1,arg2,...)
             end
             return true;
         end
+
+    elseif event == "RUNE_POWER_UPDATE" then
+
+        print("updated rune!")
         
     elseif event == "PLAYER_ENTERING_WORLD" then
 
-        aura_env.CreateStates(allstates,maxPower,unitPowerIndex);
-        
+        if unitClass == "DEATHKNIGHT" then
+            aura_env.CreateDKStates(allstates,maxPower);
+            print("using DK runes!")
+        else
+            aura_env.CreateStates(allstates,maxPower,unitPowerIndex);
+            print("not using DK runes!")
+        end
         return true;
 
     elseif event == "PLAYER_TALENT_UPDATE" then
 
         aura_env.ClearStates(allstates);
         aura_env.CreateStates(allstates,maxPower,unitPowerIndex);
-
         return true;
 
     elseif event =="UPDATE_SHAPESHIFT_FORM" and unitClass == "DRUID" then
