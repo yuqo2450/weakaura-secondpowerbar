@@ -16,14 +16,12 @@ function(allstates,event,arg1,arg2,...)
 
     elseif event == "RUNE_POWER_UPDATE" then
 
-        aura_env.region:SetInverse(true);
         aura_env.SetDKRunes(allstates,maxPower);
         return true;
         
     elseif event == "PLAYER_ENTERING_WORLD" then
 
         if unitClass == "DEATHKNIGHT" then
-            aura_env.region:SetInverse(true);
             aura_env.SetDKRunes(allstates,maxPower);
         else
             aura_env.CreateStates(allstates,maxPower,unitPowerIndex);
