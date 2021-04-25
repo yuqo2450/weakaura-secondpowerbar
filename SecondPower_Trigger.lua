@@ -5,14 +5,10 @@ function(allstates,event,arg1,arg2,...)
    
     if event == "UNIT_POWER_UPDATE" then
         
-        if arg1 ~= "player" or arg2 ~= powerName then
-            return true;
-        end
-        
-        if arg1 == "player" and arg2 == powerName then          
+        if arg1 == "player" and arg2 == powerName and class ~= "DEATHKNIGHT" then          
             aura_env.SetPowerValue(allstates,maxPower,powerIndex);
-            return true;
         end
+        return true;
 
     elseif event == "RUNE_POWER_UPDATE" and class == "DEATHKNIGHT" then
 
