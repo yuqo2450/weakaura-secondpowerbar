@@ -1,68 +1,68 @@
-function aura_env.GetPowerValue(currentPower,unitPowerIndex)
+function aura_env.GetPowerValue(currentPower,powerIndex)
 
-    local allPowerStatus;
+    local totalPowerStatus;
     
     if UnitClassBase("player") == "WARLOCK" then
-        allPowerStatus = UnitPower("player",unitPowerIndex,true) * 0.1;
+        totalPowerStatus = UnitPower("player",powerIndex,true) * 0.1;
     elseif UnitClassBase("player") == "PALADIN" or "MONK" or "ROGUE" or "DRUID" or "MAGE" then
-        allPowerStatus = UnitPower("player",unitPowerIndex,true);
+        totalPowerStatus = UnitPower("player",powerIndex,true);
     end
 
-    if allPowerStatus >= currentPower then
+    if totalPowerStatus >= currentPower then
         return 1;
-    elseif currentPower - allPowerStatus > 1 then
+    elseif currentPower - totalPowerStatus > 1 then
         return 0;
     else
-        return allPowerStatus - (currentPower - 1);
+        return totalPowerStatus - (currentPower - 1);
     end
 end
 
 function aura_env.GetUnitPowerType(unit)
 
-    local unitPowerIndex,unitPowerName,maxPower;
-    local unitClass = UnitClassBase(unit);
+    local powerIndex,powerName,maxPower;
+    local class = UnitClassBase(unit);
     
-    if unitClass == "WARLOCK" then
-        unitPowerIndex = 7;
-        unitPowerName = "SOUL_SHARDS";
-        maxPower = UnitPowerMax("player",unitPowerIndex,true) * 0.1;        
-    elseif unitClass == "PALADIN" then
-        unitPowerIndex = 9;
-        unitPowerName = "HOLY_POWER";
+    if class == "WARLOCK" then
+        powerIndex = 7;
+        powerName = "SOUL_SHARDS";
+        maxPower = UnitPowerMax("player",powerIndex,true) * 0.1;        
+    elseif class == "PALADIN" then
+        powerIndex = 9;
+        powerName = "HOLY_POWER";
         maxPower = 5;    
-    elseif unitClass == "MONK" then
+    elseif class == "MONK" then
         local _,_,_,talentSelected = GetTalentInfoByID(22098,1);
-        unitPowerIndex = 12;
-        unitPowerName = "CHI";
+        powerIndex = 12;
+        powerName = "CHI";
         maxPower = talentSelected and 6 or 5;
-    elseif unitClass == "ROGUE" then
+    elseif class == "ROGUE" then
         local _,_,_,talentSelected = GetTalentInfoByID(19240,1);
-        unitPowerIndex = 4;
-        unitPowerName = "COMBO_POINTS";
+        powerIndex = 4;
+        powerName = "COMBO_POINTS";
         maxPower = talentSelected and 6 or 5;
-    elseif unitClass == "DRUID" then
+    elseif class == "DRUID" then
         local _,catActive = GetShapeshiftFormInfo(2);
 
         if catActive then
-            unitPowerIndex = 4;
-            unitPowerName = "COMBO_POINTS";
-            maxPower = UnitPowerMax("player",unitPowerIndex,true);
+            powerIndex = 4;
+            powerName = "COMBO_POINTS";
+            maxPower = UnitPowerMax("player",powerIndex,true);
         else
-            unitPowerIndex = 0;
-            unitPowerName = "";
+            powerIndex = 0;
+            powerName = "";
             maxPower = 0;
         end
-    elseif unitClass == "MAGE" then
-        unitPowerIndex = 16;
-        unitPowerName = "ARCANE_CHARGES";
-        maxPower = UnitPowerMax("player",unitPowerIndex,true);
-    elseif unitClass == "DEATHKNIGHT" then
-        unitPowerIndex = 5;
-        unitPowerName = "RUNES";
-        maxPower = UnitPowerMax("player",unitPowerIndex,true);
+    elseif class == "MAGE" then
+        powerIndex = 16;
+        powerName = "ARCANE_CHARGES";
+        maxPower = UnitPowerMax("player",powerIndex,true);
+    elseif class == "DEATHKNIGHT" then
+        powerIndex = 5;
+        powerName = "RUNES";
+        maxPower = UnitPowerMax("player",powerIndex,true);
     end
 
-    return unitPowerIndex,unitPowerName,maxPower;
+    return powerIndex,powerName,maxPower;
 
 end
 
@@ -87,25 +87,25 @@ function aura_env.SetBarColor(class)
     return color[1],color[2],color[3],color[4];
 end
 
-function aura_env.CreateStates(allstates,maxPower,unitPowerIndex)
+function aura_env.CreateStates(allstates,maxPower,powerIndex)
 
     for currentPower=1,maxPower do
         allstates["power"..currentPower] = {
             show = true,
             progressType = "static",
             total = 1,
-            value = aura_env.GetPowerValue(currentPower,unitPowerIndex),
+            value = aura_env.GetPowerValue(currentPower,powerIndex),
             name = currentPower,
             index = currentPower,
         };
     end
 end
 
-function aura_env.SetPowerValue(allstates,maxPower,unitPowerIndex)
+function aura_env.SetPowerValue(allstates,maxPower,powerIndex)
 
     for currentPower=1,maxPower do
 
-        allstates["power"..currentPower].value = aura_env.GetPowerValue(currentPower,unitPowerIndex);
+        allstates["power"..currentPower].value = aura_env.GetPowerValue(currentPower,powerIndex);
         allstates["power"..currentPower].show = true;
         allstates["power"..currentPower].changed = true;
 
