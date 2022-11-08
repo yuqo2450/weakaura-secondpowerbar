@@ -29,17 +29,20 @@ function aura_env.GetUnitPowerType(unit)
   elseif class == "PALADIN" then
     powerIndex = 9;
     powerName = "HOLY_POWER";
+    --For event PLAYER_ENTERING_WORLD this returns 4 instead of 5 or 6
+    --maxPower = UnitPowerMax("player",unitPowerIndex,true);
     maxPower = 5;    
   elseif class == "MONK" then
     local _,_,_,talentSelected = GetTalentInfoByID(22098,1);
     powerIndex = 12;
     powerName = "CHI";
+    --For event PLAYER_ENTERING_WORLD this returns 4 instead of 5 or 6
+    --maxPower = UnitPowerMax("player",unitPowerIndex,true);
     maxPower = talentSelected and 6 or 5;
   elseif class == "ROGUE" then
-    local _,_,_,talentSelected = GetTalentInfoByID(19240,1);
     powerIndex = 4;
     powerName = "COMBO_POINTS";
-    maxPower = talentSelected and 6 or 5;
+    maxPower = UnitPowerMax("player",powerIndex,true);
   elseif class == "DRUID" then
     local _,catActive = GetShapeshiftFormInfo(2);
     

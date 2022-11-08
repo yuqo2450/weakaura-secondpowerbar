@@ -24,7 +24,7 @@ function(allstates,event,arg1,arg2,...)
     end
     return true;
       
-  elseif event == "PLAYER_TALENT_UPDATE" then
+  elseif event == "TRAIT_CONFIG_UPDATED" then
       
     aura_env.ClearStates(allstates);
     aura_env.CreateStates(allstates,maxPower,powerIndex);
