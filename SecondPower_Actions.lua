@@ -18,55 +18,48 @@ function aura_env.GetPowerValue(currentPower,powerIndex)
 end
 
 function aura_env.GetUnitPowerType(unit)
-  
+
   local powerIndex,powerName,maxPower;
   local class = UnitClassBase(unit);
-  
+
   if class == "WARLOCK" then
     powerIndex = 7;
     powerName = "SOUL_SHARDS";
-    maxPower = UnitPowerMax("player",powerIndex,true) * 0.1;        
-  elseif class == "PALADIN" then
-    powerIndex = 9;
-    powerName = "HOLY_POWER";
-    --For event PLAYER_ENTERING_WORLD this returns 4 instead of 5 or 6
-    --maxPower = UnitPowerMax("player",unitPowerIndex,true);
-    maxPower = 5;    
-  elseif class == "MONK" then
-    local _,_,_,talentSelected = GetTalentInfoByID(22098,1);
-    powerIndex = 12;
-    powerName = "CHI";
-    --For event PLAYER_ENTERING_WORLD this returns 4 instead of 5 or 6
-    --maxPower = UnitPowerMax("player",unitPowerIndex,true);
-    maxPower = talentSelected and 6 or 5;
-  elseif class == "ROGUE" then
-    powerIndex = 4;
-    powerName = "COMBO_POINTS";
-    maxPower = UnitPowerMax("player",powerIndex,true);
-  elseif class == "DRUID" then
-    local _,catActive = GetShapeshiftFormInfo(2);
-    
-    if catActive then
+    maxPower = UnitPowerMax("player",powerIndex,true) * 0.1;
+  else
+    if class == "PALADIN" then
+      powerIndex = 9;
+      powerName = "HOLY_POWER";
+    elseif class == "MONK" then
+      powerIndex = 12;
+      powerName = "CHI";
+    elseif class == "ROGUE" then
       powerIndex = 4;
       powerName = "COMBO_POINTS";
-      maxPower = UnitPowerMax("player",powerIndex,true);
-    else
-      powerIndex = 0;
-      powerName = "";
-      maxPower = 0;
+    elseif class == "DRUID" then
+      local _,catActive = GetShapeshiftFormInfo(2);
+
+      if catActive then
+        powerIndex = 4;
+        powerName = "COMBO_POINTS";
+
+      else
+        powerIndex = 0;
+        powerName = "";
+        maxPower = 0;
+      end
+    elseif class == "MAGE" then
+      powerIndex = 16;
+      powerName = "ARCANE_CHARGES";
+    elseif class == "DEATHKNIGHT" then
+      powerIndex = 5;
+      powerName = "RUNES";
     end
-  elseif class == "MAGE" then
-    powerIndex = 16;
-    powerName = "ARCANE_CHARGES";
-    maxPower = UnitPowerMax("player",powerIndex,true);
-  elseif class == "DEATHKNIGHT" then
-    powerIndex = 5;
-    powerName = "RUNES";
-    maxPower = UnitPowerMax("player",powerIndex,true);
+    maxPower = UnitPowerMax("player",powerIndex,true)
   end
-  
+
   return powerIndex,powerName,maxPower;
-  
+
 end
 
 function aura_env.SetBarColor(class)
@@ -136,4 +129,12 @@ function aura_env.ClearStates(allstates)
   for _,value in pairs(allstates) do
     value.show = false;
   end
+end
+
+function aura_env.CountStates(allstates)
+  local counter = 0
+  for _,_ in pairs(allstates) do
+    counter = counter + 1
+  end
+  return counter
 end
