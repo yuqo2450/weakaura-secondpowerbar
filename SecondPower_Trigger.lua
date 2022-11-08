@@ -45,4 +45,3 @@ function(allstates,event,arg1,arg2,...)
     return true;
   end
 end
-
