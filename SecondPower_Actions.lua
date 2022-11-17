@@ -26,6 +26,18 @@ function aura_env.GetUnitPowerType(unit)
     powerIndex = 7;
     powerName = "SOUL_SHARDS";
     maxPower = UnitPowerMax("player",powerIndex,true) * 0.1;
+  elseif class == "DRUID" then
+    local _,catActive = GetShapeshiftFormInfo(2);
+
+    if catActive then
+      powerIndex = 4;
+      powerName = "COMBO_POINTS";
+      maxPower = UnitPowerMax("player",powerIndex,true)
+    else
+      powerIndex = 0;
+      powerName = "";
+      maxPower = 0;
+    end
   else
     if class == "PALADIN" then
       powerIndex = 9;
@@ -36,18 +48,6 @@ function aura_env.GetUnitPowerType(unit)
     elseif class == "ROGUE" then
       powerIndex = 4;
       powerName = "COMBO_POINTS";
-    elseif class == "DRUID" then
-      local _,catActive = GetShapeshiftFormInfo(2);
-
-      if catActive then
-        powerIndex = 4;
-        powerName = "COMBO_POINTS";
-
-      else
-        powerIndex = 0;
-        powerName = "";
-        maxPower = 0;
-      end
     elseif class == "MAGE" then
       powerIndex = 16;
       powerName = "ARCANE_CHARGES";
