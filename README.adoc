@@ -4,7 +4,7 @@
 :hardbreaks-option:
 
 == General
-This WeakAura displays a high customizable progressbar to track the second power such as Chi, Runes, Combo Points, Arcane Charges, Holy Power and Soul Shards. It displays those powers with their https://wowpedia.fandom.com/wiki/Power_colors[corresponding colors].
+This WeakAura displays second powers such as Chi, Runes, Combo Points, Arcane Charges, Holy Power and Soul Shards. It displays those powers with their https://wowpedia.fandom.com/wiki/Power_colors[corresponding colors].
 
 == Usage
 === Install
