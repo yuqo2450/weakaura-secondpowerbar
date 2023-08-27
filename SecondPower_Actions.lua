@@ -3,7 +3,7 @@ function aura_env.GetPowerValue(currentPower,powerIndex)
   local totalPowerStatus;
 
   if UnitClassBase("player") == "WARLOCK" then
-    if GetSpecialization() then
+    if GetSpecialization() == 3 then
       totalPowerStatus = UnitPower("player",powerIndex,true) * 0.1;
     else
       totalPowerStatus = math.floor(UnitPower("player",powerIndex,true) * 0.1);
