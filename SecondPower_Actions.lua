@@ -96,7 +96,7 @@ function aura_env.SetBarColor(class)
   elseif class == "DEATHKNIGHT" then
     color = aura_env.config.dkRunes
   end
-  
+
   return color[1],color[2],color[3],color[4];
 end
 
