@@ -1,13 +1,17 @@
 function aura_env.GetPowerValue(currentPower,powerIndex)
-    
+
   local totalPowerStatus;
-  
+
   if UnitClassBase("player") == "WARLOCK" then
-    totalPowerStatus = UnitPower("player",powerIndex,true) * 0.1;
+    if GetSpecialization() then
+      totalPowerStatus = UnitPower("player",powerIndex,true) * 0.1;
+    else
+      totalPowerStatus = math.floor(UnitPower("player",powerIndex,true) * 0.1);
+    end
   elseif UnitClassBase("player") == "PALADIN" or "MONK" or "ROGUE" or "DRUID" or "MAGE" then
     totalPowerStatus = UnitPower("player",powerIndex,true);
   end
-  
+
   if totalPowerStatus >= currentPower then
     return 1;
   elseif currentPower - totalPowerStatus > 1 then
@@ -63,9 +67,9 @@ function aura_env.GetUnitPowerType(unit)
 end
 
 function aura_env.SetBarColor(class)
-  
+
   local color;
-  
+
   if class == "WARLOCK" then
     color = aura_env.config.soulShard;
   elseif class == "PALADIN" then
@@ -84,7 +88,7 @@ function aura_env.SetBarColor(class)
 end
 
 function aura_env.CreateStates(allstates,maxPower,powerIndex)
-  
+
   for currentPower=1,maxPower do
     allstates["power"..currentPower] = {
       show = true,
@@ -98,18 +102,18 @@ function aura_env.CreateStates(allstates,maxPower,powerIndex)
 end
 
 function aura_env.SetPowerValue(allstates,maxPower,powerIndex)
-  
+
   for currentPower=1,maxPower do
-      
+
     allstates["power"..currentPower].value = aura_env.GetPowerValue(currentPower,powerIndex);
     allstates["power"..currentPower].show = true;
     allstates["power"..currentPower].changed = true;
-      
+
   end
 end
 
 function aura_env.SetDKRunes(allstates,maxPower)
-  
+
   for currentPower=1,maxPower do
     local start,duration,runeState = GetRuneCooldown(currentPower)
     allstates["power"..currentPower] = {
@@ -125,7 +129,7 @@ function aura_env.SetDKRunes(allstates,maxPower)
 end
 
 function aura_env.ClearStates(allstates)
-  
+
   for _,value in pairs(allstates) do
     value.show = false;
   end
