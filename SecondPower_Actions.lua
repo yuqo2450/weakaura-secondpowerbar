@@ -92,7 +92,11 @@ function aura_env.SetBarColor(class)
   elseif (class == "ROGUE") or (class == "DRUID") then
     color = aura_env.config.comboPoints;
   elseif class == "MONK" then
-    color = aura_env.config.chi;
+    if GetSpecialization() == 1 then
+      return aura_env.SetStaggerColor();
+    else
+      color = aura_env.config.chi;
+    end
   elseif class == "DEATHKNIGHT" then
     color = aura_env.config.dkRunes
   end
@@ -143,8 +147,9 @@ end
 
 function aura_env.ClearStates(allstates)
 
-  for _,value in pairs(allstates) do
-    value.show = false;
+  for _,state in pairs(allstates) do
+    state.show = false;
+    state.changed = true;
   end
 end
 
@@ -154,4 +159,18 @@ function aura_env.CountStates(allstates)
     counter = counter + 1
   end
   return counter
+end
+
+function aura_env.SetStaggerColor()
+  local percentValue = math.floor(UnitStagger("player") / UnitHealthMax("player") * 100);
+  local color;
+  if percentValue >= 60 then
+    color = aura_env.config.heavyStagger;
+  elseif percentValue >= 30 then
+    color = aura_env.config.mediumStagger;
+  else
+    color = aura_env.config.lightStagger;
+  end
+
+  return color[1],color[2],color[3],color[4];
 end
