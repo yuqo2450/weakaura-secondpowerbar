@@ -8,7 +8,13 @@ function aura_env.GetPowerValue(currentPower,powerIndex)
     else
       totalPowerStatus = math.floor(UnitPower("player",powerIndex,true) * 0.1);
     end
-  elseif UnitClassBase("player") == "PALADIN" or "MONK" or "ROGUE" or "DRUID" or "MAGE" then
+  elseif UnitClassBase("player") == "MONK" then
+    if GetSpecialization() == 1 then
+      return UnitStagger("player")
+    elseif GetSpecialization() == 3 then
+      totalPowerStatus = UnitPower("player",powerIndex,true);
+    end
+  elseif UnitClassBase("player") == "PALADIN" or "ROGUE" or "DRUID" or "MAGE" then
     totalPowerStatus = UnitPower("player",powerIndex,true);
   end
 
@@ -29,26 +35,33 @@ function aura_env.GetUnitPowerType(unit)
   if class == "WARLOCK" then
     powerIndex = 7;
     powerName = "SOUL_SHARDS";
-    maxPower = UnitPowerMax("player",powerIndex,true) * 0.1;
+    maxPower = UnitPowerMax(unit,powerIndex,true) * 0.1;
   elseif class == "DRUID" then
     local _,catActive = GetShapeshiftFormInfo(2);
 
     if catActive then
       powerIndex = 4;
       powerName = "COMBO_POINTS";
-      maxPower = UnitPowerMax("player",powerIndex,true)
+      maxPower = UnitPowerMax(unit,powerIndex,true)
     else
       powerIndex = 0;
       powerName = "";
       maxPower = 0;
     end
+  elseif class == "MONK" then
+    if GetSpecialization() == 1 then
+      powerIndex = 100;
+      powerName = "STAGGER";
+      maxPower = 1;
+    elseif GetSpecialization() == 3 then
+      powerIndex = 12;
+      powerName = "CHI";
+      maxPower = UnitPowerMax(unit,powerIndex,true);
+    end
   else
     if class == "PALADIN" then
       powerIndex = 9;
       powerName = "HOLY_POWER";
-    elseif class == "MONK" then
-      powerIndex = 12;
-      powerName = "CHI";
     elseif class == "ROGUE" then
       powerIndex = 4;
       powerName = "COMBO_POINTS";
@@ -59,7 +72,7 @@ function aura_env.GetUnitPowerType(unit)
       powerIndex = 5;
       powerName = "RUNES";
     end
-    maxPower = UnitPowerMax("player",powerIndex,true)
+    maxPower = UnitPowerMax(unit,powerIndex,true);
   end
 
   return powerIndex,powerName,maxPower;
@@ -93,7 +106,7 @@ function aura_env.CreateStates(allstates,maxPower,powerIndex)
     allstates["power"..currentPower] = {
       show = true,
       progressType = "static",
-      total = 1,
+      total = powerIndex == 100 and UnitHealthMax("player") or 1,
       value = aura_env.GetPowerValue(currentPower,powerIndex),
       name = currentPower,
       index = currentPower,
