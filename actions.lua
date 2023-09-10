@@ -1,20 +1,21 @@
 function aura_env.GetPowerValue(currentPower,powerIndex)
 
   local totalPowerStatus;
+  local class = UnitClassBase("player");
 
-  if UnitClassBase("player") == "WARLOCK" then
+  if class == "WARLOCK" then
     if GetSpecialization() == 3 then
       totalPowerStatus = UnitPower("player",powerIndex,true) * 0.1;
     else
       totalPowerStatus = math.floor(UnitPower("player",powerIndex,true) * 0.1);
     end
-  elseif UnitClassBase("player") == "MONK" then
+  elseif class == "MONK" then
     if GetSpecialization() == 1 then
       return UnitStagger("player");
     elseif GetSpecialization() == 3 then
       totalPowerStatus = UnitPower("player",powerIndex,true);
     end
-  elseif UnitClassBase("player") == "PALADIN" or "ROGUE" or "DRUID" or "MAGE" then
+  elseif class == "PALADIN" or "ROGUE" or "DRUID" or "MAGE" then
     totalPowerStatus = UnitPower("player",powerIndex,true);
   end
 
