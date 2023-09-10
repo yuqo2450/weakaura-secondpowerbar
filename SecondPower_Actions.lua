@@ -174,3 +174,10 @@ function aura_env.SetStaggerColor()
 
   return color[1],color[2],color[3],color[4];
 end
+
+function aura_env.TestStates(allstates, maxPower, powerIndex)
+  if aura_env.CountStates(allstates) ~= maxPower then
+    aura_env.ClearStates(allstates);
+    aura_env.CreateStates(allstates,maxPower,powerIndex);
+  end
+end

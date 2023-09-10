@@ -12,10 +12,8 @@ function(allstates,event,arg1,arg2,...)
       On the named event UnitPowerMax() retunrs for Chi and HolyPower a value smaller than the actual.
       This causes a lua error that is fixed with the following code.
     ]]
-    if aura_env.CountStates(allstates) ~= maxPower then
-      aura_env.ClearStates(allstates);
-      aura_env.CreateStates(allstates,maxPower,powerIndex);
-    end
+    aura_env.TestStates(allstates, maxPower, powerIndex)
+
     if arg2 == powerName and class ~= "DEATHKNIGHT" then
       aura_env.SetPowerValue(allstates,maxPower,powerIndex);
     end
@@ -58,10 +56,11 @@ function(allstates,event,arg1,arg2,...)
       return false;
     end
 
-    if aura_env.CountStates(allstates) ~= maxPower then
-      aura_env.ClearStates(allstates);
-      aura_env.CreateStates(allstates,maxPower,powerIndex);
-    end
+    --[[
+      When states are not tested, there will be an LUA error when loading the aura in combat
+      Testing the states fixes this bug
+    ]]
+    aura_env.TestStates(allstates, maxPower, powerIndex)
 
     if arg2['addedAuras'] ~= nil and string.find(arg2['addedAuras'][1]['name'], 'Stagger') then
       aura_env.staggerAuraInstanceID = arg2['addedAuras'][1]['auraInstanceID'];
