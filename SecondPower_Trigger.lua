@@ -58,6 +58,11 @@ function(allstates,event,arg1,arg2,...)
       return false;
     end
 
+    if aura_env.CountStates(allstates) ~= maxPower then
+      aura_env.ClearStates(allstates);
+      aura_env.CreateStates(allstates,maxPower,powerIndex);
+    end
+
     if arg2['addedAuras'] ~= nil then
       if string.find(arg2['addedAuras'][1]['name'], 'Stagger') then
         aura_env.staggerAuraInstanceID = arg2['addedAuras'][1]['auraInstanceID'];

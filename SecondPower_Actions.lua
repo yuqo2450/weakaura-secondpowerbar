@@ -10,7 +10,7 @@ function aura_env.GetPowerValue(currentPower,powerIndex)
     end
   elseif UnitClassBase("player") == "MONK" then
     if GetSpecialization() == 1 then
-      return UnitStagger("player")
+      return UnitStagger("player");
     elseif GetSpecialization() == 3 then
       totalPowerStatus = UnitPower("player",powerIndex,true);
     end
