@@ -9,13 +9,9 @@ function aura_env.GetPowerValue(currentPower,powerIndex)
     else
       totalPowerStatus = math.floor(UnitPower("player",powerIndex,true) * 0.1);
     end
-  elseif class == "MONK" then
-    if GetSpecialization() == 1 then
-      return UnitStagger("player");
-    elseif GetSpecialization() == 3 then
-      totalPowerStatus = UnitPower("player",powerIndex,true);
-    end
-  elseif class == "PALADIN" or "ROGUE" or "DRUID" or "MAGE" then
+  elseif class == "MONK" and GetSpecialization() == 1 then
+    return UnitStagger("player");
+  elseif class == "PALADIN" or "ROGUE" or "DRUID" or "MAGE" or "MONK" then
     totalPowerStatus = UnitPower("player",powerIndex,true);
   end
 
