@@ -6,6 +6,8 @@
 == General
 This WeakAura displays second powers such as Chi, Runes, Combo Points, Arcane Charges, Holy Power and Soul Shards. It displays those powers with their https://wowpedia.fandom.com/wiki/Power_colors[corresponding colors].
 
+It is also available on https://wago.io/ITv4LSZhg[wago.io].
+
 == Usage
 === Install
 To use this aura, copy the string from https://github.com/yuqo2450/wow_wa_secondpowerbar/blob/main/SecondPower.txt[SecondPower.txt] and import it in WeakAuras.
