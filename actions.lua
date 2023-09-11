@@ -71,9 +71,7 @@ function aura_env.GetUnitPowerType(unit)
     end
     maxPower = UnitPowerMax(unit,powerIndex,true);
   end
-
   return powerIndex,powerName,maxPower;
-
 end
 
 function aura_env.SetBarColor(class)
@@ -97,7 +95,6 @@ function aura_env.SetBarColor(class)
   elseif class == "DEATHKNIGHT" then
     color = aura_env.config.dkRunes
   end
-
   return color[1],color[2],color[3],color[4];
 end
 
@@ -118,11 +115,9 @@ end
 function aura_env.SetPowerValue(allstates,maxPower,powerIndex)
 
   for currentPower=1,maxPower do
-
     allstates["power"..currentPower].value = aura_env.GetPowerValue(currentPower,powerIndex);
     allstates["power"..currentPower].show = true;
     allstates["power"..currentPower].changed = true;
-
   end
 end
 
@@ -168,7 +163,6 @@ function aura_env.SetStaggerColor()
   else
     color = aura_env.config.lightStagger;
   end
-
   return color[1],color[2],color[3],color[4];
 end
 

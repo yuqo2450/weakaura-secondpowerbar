@@ -18,23 +18,17 @@ function(allstates,event,arg1,arg2,...)
       aura_env.SetPowerValue(allstates,maxPower,powerIndex);
     end
     return true;
-
   elseif event == "RUNE_POWER_UPDATE" and class == "DEATHKNIGHT" then
-
     aura_env.SetDKRunes(allstates,maxPower);
     return true;
-
   elseif event == "PLAYER_ENTERING_WORLD" then
-
     if class == "DEATHKNIGHT" then
       aura_env.SetDKRunes(allstates,maxPower);
     else
       aura_env.CreateStates(allstates,maxPower,powerIndex);
     end
     return true;
-
   elseif next({"TRAIT_CONFIG_UPDATED", "PLAYER_SPECIALIZATION_CHANGED"}) == event then
-
     aura_env.ClearStates(allstates);
     -- aura_env.CreateStates(allstates,maxPower,powerIndex);
     return true;
@@ -49,7 +43,6 @@ function(allstates,event,arg1,arg2,...)
     else
       aura_env.ClearStates(allstates);
     end
-
     return true;
   elseif event == "UNIT_AURA" then
     if arg1 ~= "player" then
@@ -61,20 +54,16 @@ function(allstates,event,arg1,arg2,...)
       Testing the states fixes this bug
     ]]
     aura_env.TestStates(allstates, maxPower, powerIndex)
-
     if arg2['addedAuras'] ~= nil and string.find(arg2['addedAuras'][1]['name'], 'Stagger') then
       aura_env.staggerAuraInstanceID = arg2['addedAuras'][1]['auraInstanceID'];
       aura_env.SetPowerValue(allstates,maxPower,powerIndex);
-
       return true;
     elseif arg2['updatedAuraInstanceIDs'] and arg2['updatedAuraInstanceIDs'][1] == aura_env.staggerAuraInstanceID then
       aura_env.SetPowerValue(allstates,maxPower,powerIndex);
-
       return true;
     elseif arg2['removedAuraInstanceIDs'] and arg2['removedAuraInstanceIDs'][1] == aura_env.staggerAuraInstanceID then
       aura_env.SetPowerValue(allstates,maxPower,powerIndex);
       aura_env.staggerAuraInstanceID = nil;
-
       return true;
     else
       return false
