@@ -1,0 +1,21 @@
+name: New release
+run-name: Create new release.
+on:
+  push:
+    tags:
+      - v**
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Create new release
+        uses: fnkr/github-action-ghr@v1
+        env:
+          GHR_PATH: wagoio/import.txt
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
