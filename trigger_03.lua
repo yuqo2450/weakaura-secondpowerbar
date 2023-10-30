@@ -1,12 +1,8 @@
 --[[
-  Default second power trigger
-  Events: UNIT_POWER_UPDATE
+  DK rune only trigger
+  Events: RUNE_POWER_UPDATE
   ]]
 function(allstates,event,arg1,arg2,...)
-  if arg1 ~= "player" then
-    return false;
-  end
-
   local class = UnitClassBase("player");
   if class ~= "DEATHKNIGHT" then
     return false;
@@ -19,6 +15,6 @@ function(allstates,event,arg1,arg2,...)
     This causes a lua error that is fixed with the following code.
   ]]
   aura_env.TestStates(allstates, maxPower, powerIndex);
-  aura_env.SetPowerValue(allstates,maxPower,powerIndex);
+  aura_env.SetDKRunes(allstates,maxPower);
   return true;
 end
