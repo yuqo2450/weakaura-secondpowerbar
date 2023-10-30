@@ -12,17 +12,14 @@ function(allstates,event,arg1,arg2,...)
     else
       aura_env.TestStates(allstates, maxPower, powerIndex);
     end
-    print(event .. ":" .. maxPower)
     return true;
-  elseif "PLAYER_SPECIALIZATION_CHANGED" == event then
+  elseif "PLAYER_SPECIALIZATION_CHANGED" == event or "TRAIT_CONFIG_UPDATED" == event then
     -- aura_env.ClearStates(allstates);
     aura_env.TestStates(allstates,maxPower,powerIndex);
-    print(event .. ":" .. maxPower)
     return true;
   elseif event =="UPDATE_SHAPESHIFT_FORM" and class == "DRUID" then
 
     local _,catActive = GetShapeshiftFormInfo(2);
-    print(event .. ":" .. maxPower)
     if catActive then
       aura_env.TestStates(allstates, maxPower, powerIndex);
     elseif next(allstates) == nil then
