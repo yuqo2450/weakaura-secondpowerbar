@@ -10,6 +10,11 @@ function(allstates,event,arg1,arg2,...)
     if class == "DEATHKNIGHT" then
       aura_env.SetDKRunes(allstates,maxPower);
     else
+      --[[
+        There exists an issue with event PLAYER_ENTERING_WORLD and function UnitPowerMax().
+        On the named event UnitPowerMax() retunrs for Chi and HolyPower a value smaller than the actual.
+        This causes a lua error that is fixed with the following code.
+      ]]
       aura_env.TestStates(allstates, maxPower, powerIndex);
     end
     return true;
@@ -36,15 +41,16 @@ function(allstates,event,arg1,arg2,...)
 
     if class == "DEATHKNIGHT" then
       return false;
+    elseif class == "MONK" and GetSpecialization() == 1 then
+      return false;
     end
 
-    --[[
-      There exists an issue with event PLAYER_ENTERING_WORLD and function UnitPowerMax().
-      On the named event UnitPowerMax() retunrs for Chi and HolyPower a value smaller than the actual.
-      This causes a lua error that is fixed with the following code.
-    ]]
-    aura_env.TestStates(allstates, maxPower, powerIndex);
     aura_env.SetPowerValue(allstates,maxPower,powerIndex);
+    return true;
+
+  elseif event == "RUNE_POWER_UPDATE" then
+    aura_env.TestStates(allstates, maxPower, powerIndex);
+    aura_env.SetDKRunes(allstates,maxPower);
     return true;
 
   else
