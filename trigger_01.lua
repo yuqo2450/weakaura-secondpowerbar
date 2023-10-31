@@ -1,6 +1,6 @@
 --[[
   Power creation trigger
-  Events: PLAYER_SPECIALIZATION_CHANGED,TRAIT_CONFIG_UPDATED,UPDATE_SHAPESHIFT_FORM,PLAYER_ENTERING_WORLD,UNIT_POWER_UPDATE
+  Events: PLAYER_SPECIALIZATION_CHANGED,TRAIT_CONFIG_UPDATED,UPDATE_SHAPESHIFT_FORM,PLAYER_ENTERING_WORLD,UNIT_POWER_UPDATE,RUNE_POWER_UPDATE
   ]]
 function(allstates,event,arg1,arg2,...)
   local class = UnitClassBase("player");
@@ -39,6 +39,10 @@ function(allstates,event,arg1,arg2,...)
       return false;
     end
 
+    if arg2 ~= powerName then
+      return false;
+    end
+
     if class == "DEATHKNIGHT" then
       return false;
     elseif class == "MONK" and GetSpecialization() == 1 then
@@ -49,7 +53,10 @@ function(allstates,event,arg1,arg2,...)
     return true;
 
   elseif event == "RUNE_POWER_UPDATE" then
-    aura_env.TestStates(allstates, maxPower, powerIndex);
+    if class ~= "DEATHKNIGHT" then
+      return false;
+    end
+
     aura_env.SetDKRunes(allstates,maxPower);
     return true;
 
