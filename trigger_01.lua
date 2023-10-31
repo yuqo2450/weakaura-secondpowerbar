@@ -1,6 +1,6 @@
 --[[
   Power creation trigger
-  Events: PLAYER_SPECIALIZATION_CHANGED,TRAIT_CONFIG_UPDATED,UPDATE_SHAPESHIFT_FORM,PLAYER_ENTERING_WORLD,UNIT_POWER_UPDATE,RUNE_POWER_UPDATE
+  Events: PLAYER_SPECIALIZATION_CHANGED,TRAIT_CONFIG_UPDATED,PLAYER_ENTERING_WORLD,UPDATE_SHAPESHIFT_FORM,UNIT_POWER_UPDATE,RUNE_POWER_UPDATE
   ]]
 function(allstates,event,arg1,arg2,...)
   local class = UnitClassBase("player");
@@ -10,23 +10,19 @@ function(allstates,event,arg1,arg2,...)
     if class == "DEATHKNIGHT" then
       aura_env.SetDKRunes(allstates,maxPower);
     else
-      --[[
-        There exists an issue with event PLAYER_ENTERING_WORLD and function UnitPowerMax().
-        On the named event UnitPowerMax() retunrs for Chi and HolyPower a value smaller than the actual.
-        This causes a lua error that is fixed with the following code.
-      ]]
-      aura_env.TestStates(allstates, maxPower, powerIndex);
+      aura_env.CreateStates(allstates,maxPower,powerIndex);
     end
     return true;
 
   elseif "PLAYER_SPECIALIZATION_CHANGED" == event or "TRAIT_CONFIG_UPDATED" == event then
-    aura_env.TestStates(allstates,maxPower,powerIndex);
+    aura_env.ClearStates(allstates);
+    aura_env.CreateStates(allstates,maxPower,powerIndex);
     return true;
 
   elseif event =="UPDATE_SHAPESHIFT_FORM" and class == "DRUID" then
     local _,catActive = GetShapeshiftFormInfo(2);
     if catActive then
-      aura_env.TestStates(allstates, maxPower, powerIndex);
+      aura_env.CreateStates(allstates,maxPower,powerIndex);
     elseif next(allstates) == nil then
       return true;
     else
@@ -49,6 +45,7 @@ function(allstates,event,arg1,arg2,...)
       return false;
     end
 
+    aura_env.TestStates(allstates, maxPower, powerIndex);
     aura_env.SetPowerValue(allstates,maxPower,powerIndex);
     return true;
 
@@ -57,7 +54,8 @@ function(allstates,event,arg1,arg2,...)
       return false;
     end
 
-    aura_env.SetDKRunes(allstates,maxPower);
+    aura_env.TestStates(allstates, maxPower, powerIndex);
+    aura_env.SetDKRunes(allstates, maxPower);
     return true;
 
   else
