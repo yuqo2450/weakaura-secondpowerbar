@@ -68,7 +68,7 @@ function(allstates,event,arg1,arg2,...)
     end
 
     aura_env.TestStates(allstates, maxPower, powerIndex);
-    aura_env.SetStaggerValue(allstates,maxPower,powerIndex,arg2);
+    aura_env.SetPowerValue(allstates,maxPower,powerIndex);
     return true;
 
   else

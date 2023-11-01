@@ -172,15 +172,3 @@ function aura_env.TestStates(allstates, maxPower, powerIndex)
     aura_env.CreateStates(allstates,maxPower,powerIndex);
   end
 end
-
-function aura_env.SetStaggerValue(allstates,maxPower,powerIndex,aura)
-  if aura['addedAuras'] and string.find(aura['addedAuras'][1]['name'], 'Stagger') then
-    aura_env.staggerAuraInstanceID = aura['addedAuras'][1]['auraInstanceID'];
-    aura_env.SetPowerValue(allstates,maxPower,powerIndex);
-  elseif aura['updatedAuraInstanceIDs'] and aura['updatedAuraInstanceIDs'][1] == aura_env.staggerAuraInstanceID then
-    aura_env.SetPowerValue(allstates,maxPower,powerIndex);
-  elseif aura['removedAuraInstanceIDs'] and aura['removedAuraInstanceIDs'][1] == aura_env.staggerAuraInstanceID then
-    aura_env.SetPowerValue(allstates,maxPower,powerIndex);
-    aura_env.staggerAuraInstanceID = nil;
-  end
-end
