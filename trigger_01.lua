@@ -1,6 +1,6 @@
 --[[
   Power creation trigger
-  Events: PLAYER_SPECIALIZATION_CHANGED,TRAIT_CONFIG_UPDATED,PLAYER_ENTERING_WORLD,UPDATE_SHAPESHIFT_FORM,UNIT_POWER_UPDATE,RUNE_POWER_UPDATE
+  Events: PLAYER_SPECIALIZATION_CHANGED,TRAIT_CONFIG_UPDATED,PLAYER_ENTERING_WORLD,UPDATE_SHAPESHIFT_FORM,UNIT_POWER_UPDATE,RUNE_POWER_UPDATE,UNIT_AURA
   ]]
 function(allstates,event,arg1,arg2,...)
   local class = UnitClassBase("player");
@@ -58,6 +58,27 @@ function(allstates,event,arg1,arg2,...)
     aura_env.SetDKRunes(allstates, maxPower);
     return true;
 
+  elseif event == "UNIT_AURA" then
+    if arg1 ~= "player" then
+      return false;
+    end
+
+    if class ~= "MONK" and GetSpecialization() ~= 1 then
+      return false;
+    end
+
+    aura_env.TestStates(allstates, maxPower, powerIndex);
+    if arg2['addedAuras'] ~= nil and string.find(arg2['addedAuras'][1]['name'], 'Stagger') then
+      aura_env.staggerAuraInstanceID = arg2['addedAuras'][1]['auraInstanceID'];
+      aura_env.SetPowerValue(allstates,maxPower,powerIndex);
+      return true;
+    elseif arg2['updatedAuraInstanceIDs'] and arg2['updatedAuraInstanceIDs'][1] == aura_env.staggerAuraInstanceID then
+      aura_env.SetPowerValue(allstates,maxPower,powerIndex);
+      return true;
+    elseif arg2['removedAuraInstanceIDs'] and arg2['removedAuraInstanceIDs'][1] == aura_env.staggerAuraInstanceID then
+      aura_env.SetPowerValue(allstates,maxPower,powerIndex);
+      aura_env.staggerAuraInstanceID = nil;
+      return true;
   else
     return false;
   end
