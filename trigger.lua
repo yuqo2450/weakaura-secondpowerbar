@@ -68,17 +68,9 @@ function(allstates,event,arg1,arg2,...)
     end
 
     aura_env.TestStates(allstates, maxPower, powerIndex);
-    if arg2['addedAuras'] ~= nil and string.find(arg2['addedAuras'][1]['name'], 'Stagger') then
-      aura_env.staggerAuraInstanceID = arg2['addedAuras'][1]['auraInstanceID'];
-      aura_env.SetPowerValue(allstates,maxPower,powerIndex);
-      return true;
-    elseif arg2['updatedAuraInstanceIDs'] and arg2['updatedAuraInstanceIDs'][1] == aura_env.staggerAuraInstanceID then
-      aura_env.SetPowerValue(allstates,maxPower,powerIndex);
-      return true;
-    elseif arg2['removedAuraInstanceIDs'] and arg2['removedAuraInstanceIDs'][1] == aura_env.staggerAuraInstanceID then
-      aura_env.SetPowerValue(allstates,maxPower,powerIndex);
-      aura_env.staggerAuraInstanceID = nil;
-      return true;
+    aura_env.SetStaggerValue(allstates,maxPower,powerIndex,arg2);
+    return true;
+
   else
     return false;
   end
