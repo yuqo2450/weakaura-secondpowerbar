@@ -179,15 +179,23 @@ function aura_env.TestStates(allstates, maxPower, powerIndex)
 end
 
 function aura_env.SetEssences(allstates,maxPower)
+  local activeEssences = UnitPower("player", Enum.PowerType.Essence)
+  local expTime = GetTime();
+
   for currentPower=1,maxPower do
+    if currentPower == activeEssences + 1 then
+      expTime = GetTime() + 5 / (5 / (1 / GetPowerRegenForPowerType(Enum.PowerType.Essence)));
+    elseif currentPower > activeEssences + 1 then
+      expTime = 0;
+    end
     allstates["power"..currentPower] = {
       changed = true,
       show = true,
       progressType = "timed",
-      expirationTime = GetTime(),
-      duration = GetPowerRegenForPowerType(Enum.PowerType.Essence);
+      expirationTime = expTime,
+      duration = 5 / (5 / (1 / GetPowerRegenForPowerType(Enum.PowerType.Essence)));
       name = currentPower,
-      index = GetTime(),
+      index = currentPower,
     };
   end
 end
