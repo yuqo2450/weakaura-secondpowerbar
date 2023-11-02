@@ -14,11 +14,19 @@ function(allstates,event,arg1,arg2,...)
     else
       aura_env.CreateStates(allstates,maxPower,powerIndex);
     end
+    print("works1")
     return true;
 
   elseif "PLAYER_SPECIALIZATION_CHANGED" == event or "TRAIT_CONFIG_UPDATED" == event then
     aura_env.ClearStates(allstates);
-    aura_env.CreateStates(allstates,maxPower,powerIndex);
+    if class == "DEATHKNIGHT" then
+      aura_env.SetDKRunes(allstates,maxPower);
+    elseif class == "EVOKER" then
+      aura_env.SetEssences(allstates,maxPower);
+    else
+      aura_env.CreateStates(allstates,maxPower,powerIndex);
+    end
+    print("works2")
     return true;
 
   elseif event =="UPDATE_SHAPESHIFT_FORM" and class == "DRUID" then
@@ -45,7 +53,12 @@ function(allstates,event,arg1,arg2,...)
       return false;
     elseif class == "MONK" and GetSpecialization() == 1 then
       return false;
+    elseif class == "EVOKER" then
+      print("works3")
+      return false;
     end
+
+    print("notworking1")
 
     aura_env.TestStates(allstates, maxPower, powerIndex);
     aura_env.SetPowerValue(allstates,maxPower,powerIndex);
