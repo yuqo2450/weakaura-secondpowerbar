@@ -68,6 +68,9 @@ function aura_env.GetUnitPowerType(unit)
     elseif class == "DEATHKNIGHT" then
       powerIndex = 5;
       powerName = "RUNES";
+    elseif class == "EVOKER" then
+      powerIndex = 19;
+      powerName = "ESSENCE";
     end
     maxPower = UnitPowerMax(unit,powerIndex,true);
   end
@@ -94,6 +97,8 @@ function aura_env.SetBarColor(class)
     end
   elseif class == "DEATHKNIGHT" then
     color = aura_env.config.dkRunes
+  else
+    color = aura_env.config.default
   end
   return color[1],color[2],color[3],color[4];
 end
@@ -170,5 +175,19 @@ function aura_env.TestStates(allstates, maxPower, powerIndex)
   if aura_env.CountStates(allstates) ~= maxPower then
     aura_env.ClearStates(allstates);
     aura_env.CreateStates(allstates,maxPower,powerIndex);
+  end
+end
+
+function aura_env.SetEssences(allstates,maxPower)
+  for currentPower=1,maxPower do
+    allstates["power"..currentPower] = {
+      changed = true,
+      show = true,
+      progressType = "timed",
+      expirationTime = GetTime(),
+      duration = GetPowerRegenForPowerType(Enum.PowerType.Essence);
+      name = currentPower,
+      index = GetTime(),
+    };
   end
 end

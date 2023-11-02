@@ -9,6 +9,8 @@ function(allstates,event,arg1,arg2,...)
   if event == "PLAYER_ENTERING_WORLD" then
     if class == "DEATHKNIGHT" then
       aura_env.SetDKRunes(allstates,maxPower);
+    elseif class == "EVOKER" then
+      aura_env.SetEssences(allstates,maxPower);
     else
       aura_env.CreateStates(allstates,maxPower,powerIndex);
     end
