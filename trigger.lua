@@ -10,7 +10,7 @@ function(allstates,event,arg1,arg2,...)
     if class == "DEATHKNIGHT" then
       aura_env.SetDKRunes(allstates,maxPower);
     elseif class == "EVOKER" then
-      aura_env.CreateEssences(allstates,maxPower);
+      aura_env.SetEssences(allstates,maxPower);
     else
       aura_env.CreateStates(allstates,maxPower,powerIndex);
     end
@@ -21,7 +21,7 @@ function(allstates,event,arg1,arg2,...)
     if class == "DEATHKNIGHT" then
       aura_env.SetDKRunes(allstates,maxPower);
     elseif class == "EVOKER" then
-      aura_env.CreateEssences(allstates,maxPower);
+      aura_env.SetEssences(allstates,maxPower);
     else
       aura_env.CreateStates(allstates,maxPower,powerIndex);
     end
