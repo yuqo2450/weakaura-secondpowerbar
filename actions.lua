@@ -30,14 +30,14 @@ function aura_env.GetUnitPowerType(unit)
   local class = UnitClassBase(unit);
 
   if class == "WARLOCK" then
-    powerIndex = 7;
+    powerIndex = Enum.PowerType.SoulShards;
     powerName = "SOUL_SHARDS";
     maxPower = UnitPowerMax(unit,powerIndex,true) * 0.1;
   elseif class == "DRUID" then
     local _,catActive = GetShapeshiftFormInfo(2);
 
     if catActive then
-      powerIndex = 4;
+      powerIndex = Enum.PowerType.ComboPoints;
       powerName = "COMBO_POINTS";
       maxPower = UnitPowerMax(unit,powerIndex,true)
     else
@@ -51,25 +51,25 @@ function aura_env.GetUnitPowerType(unit)
       powerName = "STAGGER";
       maxPower = 1;
     elseif GetSpecialization() == 3 then
-      powerIndex = 12;
+      powerIndex = Enum.PowerType.Chi;
       powerName = "CHI";
       maxPower = UnitPowerMax(unit,powerIndex,true);
     end
   else
     if class == "PALADIN" then
-      powerIndex = 9;
+      powerIndex = Enum.PowerType.HolyPower;
       powerName = "HOLY_POWER";
     elseif class == "ROGUE" then
-      powerIndex = 4;
+      powerIndex = Enum.PowerType.ComboPoints;
       powerName = "COMBO_POINTS";
     elseif class == "MAGE" then
-      powerIndex = 16;
+      powerIndex = Enum.PowerType.ArcaneCharges;
       powerName = "ARCANE_CHARGES";
     elseif class == "DEATHKNIGHT" then
-      powerIndex = 5;
+      powerIndex = Enum.PowerType.Runes;
       powerName = "RUNES";
     elseif class == "EVOKER" then
-      powerIndex = 19;
+      powerIndex = Enum.PowerType.Essence;
       powerName = "ESSENCE";
     end
     maxPower = UnitPowerMax(unit,powerIndex,true);
