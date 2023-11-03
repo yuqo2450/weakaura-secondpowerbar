@@ -181,10 +181,14 @@ end
 function aura_env.SetEssences(allstates,maxPower)
   local activeEssences = UnitPower("player", Enum.PowerType.Essence)
   local expTime = GetTime();
+  local essenceRegen = 0.2;
+  if GetPowerRegenForPowerType(Enum.PowerType.Essence) ~= nil or GetPowerRegenForPowerType(Enum.PowerType.Essence) ~= 0 then
+    essenceRegen = GetPowerRegenForPowerType(Enum.PowerType.Essence);
+  end
 
   for currentPower=1,maxPower do
     if currentPower == activeEssences + 1 then
-      expTime = GetTime() + 5 / (5 / (1 / GetPowerRegenForPowerType(Enum.PowerType.Essence)));
+      expTime = GetTime() + 5 / (5 / (1 / essenceRegen));
     elseif currentPower > activeEssences + 1 then
       expTime = 0;
     end
@@ -193,7 +197,7 @@ function aura_env.SetEssences(allstates,maxPower)
       show = true,
       progressType = "timed",
       expirationTime = expTime,
-      duration = 5 / (5 / (1 / GetPowerRegenForPowerType(Enum.PowerType.Essence)));
+      duration = 5 / (5 / (1 / essenceRegen)),
       name = currentPower,
       index = currentPower,
     };
