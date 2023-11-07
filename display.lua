@@ -3,7 +3,7 @@ function()
   if not aura_env.config.defaultColor then
     aura_env.region:Color(aura_env.SetBarColor(class));
   end
-  if class == "DEATHKNIGHT" then
+  if class == "DEATHKNIGHT" or class == "EVOKER" then
     aura_env.region:SetInverse(true);
   elseif class == "MONK" and GetSpecialization() == 1 then
     aura_env.region:SetOrientation("HORIZONTAL");

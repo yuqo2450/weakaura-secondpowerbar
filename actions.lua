@@ -30,14 +30,14 @@ function aura_env.GetUnitPowerType(unit)
   local class = UnitClassBase(unit);
 
   if class == "WARLOCK" then
-    powerIndex = 7;
+    powerIndex = Enum.PowerType.SoulShards;
     powerName = "SOUL_SHARDS";
     maxPower = UnitPowerMax(unit,powerIndex,true) * 0.1;
   elseif class == "DRUID" then
     local _,catActive = GetShapeshiftFormInfo(2);
 
     if catActive then
-      powerIndex = 4;
+      powerIndex = Enum.PowerType.ComboPoints;
       powerName = "COMBO_POINTS";
       maxPower = UnitPowerMax(unit,powerIndex,true)
     else
@@ -51,23 +51,26 @@ function aura_env.GetUnitPowerType(unit)
       powerName = "STAGGER";
       maxPower = 1;
     elseif GetSpecialization() == 3 then
-      powerIndex = 12;
+      powerIndex = Enum.PowerType.Chi;
       powerName = "CHI";
       maxPower = UnitPowerMax(unit,powerIndex,true);
     end
   else
     if class == "PALADIN" then
-      powerIndex = 9;
+      powerIndex = Enum.PowerType.HolyPower;
       powerName = "HOLY_POWER";
     elseif class == "ROGUE" then
-      powerIndex = 4;
+      powerIndex = Enum.PowerType.ComboPoints;
       powerName = "COMBO_POINTS";
     elseif class == "MAGE" then
-      powerIndex = 16;
+      powerIndex = Enum.PowerType.ArcaneCharges;
       powerName = "ARCANE_CHARGES";
     elseif class == "DEATHKNIGHT" then
-      powerIndex = 5;
+      powerIndex = Enum.PowerType.Runes;
       powerName = "RUNES";
+    elseif class == "EVOKER" then
+      powerIndex = Enum.PowerType.Essence;
+      powerName = "ESSENCE";
     end
     maxPower = UnitPowerMax(unit,powerIndex,true);
   end
@@ -94,6 +97,8 @@ function aura_env.SetBarColor(class)
     end
   elseif class == "DEATHKNIGHT" then
     color = aura_env.config.dkRunes
+  elseif class == "EVOKER" then
+    color = aura_env.config.essence
   end
   return color[1],color[2],color[3],color[4];
 end
@@ -170,5 +175,31 @@ function aura_env.TestStates(allstates, maxPower, powerIndex)
   if aura_env.CountStates(allstates) ~= maxPower then
     aura_env.ClearStates(allstates);
     aura_env.CreateStates(allstates,maxPower,powerIndex);
+  end
+end
+
+function aura_env.SetEssences(allstates,maxPower)
+  local activeEssences = UnitPower("player", Enum.PowerType.Essence)
+  local expTime = GetTime();
+  local essenceRegen = 0.2;
+  if GetPowerRegenForPowerType(Enum.PowerType.Essence) ~= nil or GetPowerRegenForPowerType(Enum.PowerType.Essence) ~= 0 then
+    essenceRegen = GetPowerRegenForPowerType(Enum.PowerType.Essence);
+  end
+
+  for currentPower=1,maxPower do
+    if currentPower == activeEssences + 1 then
+      expTime = GetTime() + 5 / (5 / (1 / essenceRegen));
+    elseif currentPower > activeEssences + 1 then
+      expTime = 0;
+    end
+    allstates["power"..currentPower] = {
+      changed = true,
+      show = true,
+      progressType = "timed",
+      expirationTime = expTime,
+      duration = 5 / (5 / (1 / essenceRegen)),
+      name = currentPower,
+      index = currentPower,
+    };
   end
 end
