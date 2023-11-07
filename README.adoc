@@ -13,8 +13,6 @@ It is also available on https://wago.io/ITv4LSZhg[wago.io].
 To use this aura, copy the string from https://github.com/yuqo2450/wow_wa_secondpowerbar/blob/main/SecondPower.txt[SecondPower.txt] and import it in WeakAuras.
 
 === Customize
-The aura is totally customizable via the WeakAuras GUI, with all default customizations given. Therre is also some custom options that are used to adjust the color of different power types. If you check the Default box, the Aura will use one color for all powers, that can be adjusted in the Display menu.
+The aura is totally customizable via the WeakAuras GUI, with all default customizations given. There is also some custom options that are used to adjust the color of different power types. If you check the Default box, the Aura will use one color for all powers, that can be adjusted in the Display menu.
 
 == Known Issues
-* Issue with Soul Shards showing not total values
-* Evoker not implemented yet
