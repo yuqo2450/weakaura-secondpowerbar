@@ -45,6 +45,10 @@ function aura_env.GetUnitPowerType(unit)
       powerName = "";
       maxPower = 0;
     end
+  elseif class == "PALADIN" then
+    powerIndex = Enum.PowerType.HolyPower;
+    powerName = "HOLY_POWER";
+    maxPower = 5;
   elseif class == "MONK" then
     if GetSpecialization() == 1 then
       powerIndex = 100;
@@ -56,10 +60,7 @@ function aura_env.GetUnitPowerType(unit)
       maxPower = UnitPowerMax(unit,powerIndex,true);
     end
   else
-    if class == "PALADIN" then
-      powerIndex = Enum.PowerType.HolyPower;
-      powerName = "HOLY_POWER";
-    elseif class == "ROGUE" then
+    if class == "ROGUE" then
       powerIndex = Enum.PowerType.ComboPoints;
       powerName = "COMBO_POINTS";
     elseif class == "MAGE" then
