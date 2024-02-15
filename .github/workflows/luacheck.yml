@@ -1,7 +1,11 @@
 name: Lint lua code
 run-name: luacheck
 on:
-  - push
+  push:
+    paths:
+      - '*.lua'
+  pull_request:
+    types: [opened]
 
 jobs:
   Lualint:
