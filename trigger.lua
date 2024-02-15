@@ -2,7 +2,7 @@
   Power creation trigger
   Events: PLAYER_SPECIALIZATION_CHANGED,TRAIT_CONFIG_UPDATED,PLAYER_ENTERING_WORLD,UPDATE_SHAPESHIFT_FORM,UNIT_POWER_UPDATE,RUNE_POWER_UPDATE,UNIT_AURA
   ]]
-function(allstates,event,arg1,arg2,...)
+function (allstates,event,arg1,arg2,...)
   local class = UnitClassBase("player");
   local powerIndex,powerName,maxPower = aura_env.GetUnitPowerType("player");
 

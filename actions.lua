@@ -130,7 +130,7 @@ end
 function aura_env.SetDKRunes(allstates,maxPower)
 
   for currentPower=1,maxPower do
-    local start,duration,runeState = GetRuneCooldown(currentPower)
+    local start,duration,_ = GetRuneCooldown(currentPower)
     allstates["power"..currentPower] = {
       changed = true,
       show = true,
