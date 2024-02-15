@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Fix noname function
         run: |-
-          sed -Ei -e 's/^function\s\((.*)\)$/local function test(\1) -- luacheck\: ignore 211/g' *.lua
+          sed -Ei -e 's/^function\s?\((.*)\)$/local function test(\1) -- luacheck\: ignore 211/g' *.lua
       - name: Lucheck Linter
         id: lualint
         uses: lunarmodules/luacheck@v1
