@@ -16,7 +16,7 @@ function (allstates,event,arg1,arg2,...)
     end
     return true;
 
-  elseif "PLAYER_SPECIALIZATION_CHANGED" == event or "TRAIT_CONFIG_UPDATED" == event then
+  elseif event == "PLAYER_SPECIALIZATION_CHANGED" or event == "TRAIT_CONFIG_UPDATED" then
     aura_env.ClearStates(allstates);
     if class == "DEATHKNIGHT" then
       aura_env.SetDKRunes(allstates,maxPower);
