@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [v10.2.7] - 2024-05-10
+
+### Changed
+
+* Fixed a lua error when the weak aura was viewed on unsupported classes
+* Updated import string for game version 10.2.7
+
 ## [v10.2.6] - 2024-03-31
 
 ### Changed
@@ -54,3 +61,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 [v2.4.0]: https://github.com/yuqo2450/wow_wa_secondpowerbar/compare/v2.3.1...v2.4.0
 [v10.2.0]: https://github.com/yuqo2450/wow_wa_secondpowerbar/compare/v2.4.0...v10.2.0
 [v10.2.6]: https://github.com/yuqo2450/wow_wa_secondpowerbar/compare/v10.2.5...v10.2.6
+[v10.2.7]: https://github.com/yuqo2450/wow_wa_secondpowerbar/compare/v10.2.6...v10.2.7
